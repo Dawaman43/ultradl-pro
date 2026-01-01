@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+.vscode/
+
+# UltraDL runtime
+/dev/shm/ultradl_buffer/
+/tmp/ultradl_buffer/
+*.log
