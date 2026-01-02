@@ -1,4 +1,5 @@
 import argparse
+import importlib.resources
 import os
 import shutil
 import subprocess
@@ -230,13 +231,28 @@ def build_parser() -> argparse.ArgumentParser:
     return p
 
 
+def _run_tui() -> int:
+    # Bundle the Gum-based TUI as a package resource and run it when
+    # `ultradl-pro` is invoked with no args.
+    try:
+        tui = importlib.resources.files("ultradl_pro").joinpath("tui.sh")
+        with importlib.resources.as_file(tui) as tui_path:
+            return int(subprocess.call(["bash", str(tui_path)]))
+    except FileNotFoundError:
+        console.print("[red]TUI script not found in installation.[/red]")
+        console.print("Try reinstalling from source.")
+        return 2
+    except Exception as e:
+        console.print(f"[red]Failed to start TUI:[/red] {e}")
+        return 1
+
+
 def main(argv: Optional[list[str]] = None) -> int:
     argv = argv if argv is not None else sys.argv[1:]
     parser = build_parser()
 
     if not argv:
-        parser.print_help(sys.stdout)
-        return 0
+        return _run_tui()
 
     # Convenience: `ultradl-pro <url>` behaves like `ultradl-pro download <url>`
     if argv and argv[0].startswith(("http://", "https://")):

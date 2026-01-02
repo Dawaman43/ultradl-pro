@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ultradl-pro"
-version = "0.1.1"
+version = "0.1.2"
 description = "UltraDL Pro - cross-platform CLI downloader powered by yt-dlp"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -44,7 +44,7 @@ ultradl = "ultradl_pro.cli:main"
 package-dir = {"" = "src"}
 
 [tool.setuptools.package-data]
-ultradl_pro = ["py.typed"]
+ultradl_pro = ["py.typed", "tui.sh"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
